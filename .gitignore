@@ -1,0 +1,12 @@
+# Abaikan file hasil compile C++
+*.o
+*.obj
+*.exe
+hotel_app
+
+# Abaikan folder setting VS Code (opsional)
+.vscode/
+
+# Abaikan file sistem
+.DS_Store
+Thumbs.db
