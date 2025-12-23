@@ -144,10 +144,11 @@ int main() {
                 string in = getValidString("Check-In (YYYY-MM-DD) : ");
                 string out = getValidString("Check-Out (YYYY-MM-DD): ");
                 string optStr = getValidString("Tambah Breakfast (+50k)? (y/n): ");
-                
                 char opt = optStr.empty() ? 'n' : optStr[0];
+                cout << "Metode Pembayaran:\n 1. Cash (Tunai)\n 2. Bank Transfer\n";
+                int payMethod = getValidInt("Pilih (1/2): ");
                 
-                hotel->createReservation(cId, rId, in, out, (opt=='y' || opt=='Y'));
+                hotel->createReservation(cId, rId, in, out, (opt=='y' || opt=='Y'), payMethod);
             } 
             else if (subChoice == 2) {
                 hotel->showAllReservations(); 
@@ -161,7 +162,7 @@ int main() {
         }
         else if (mainChoice != 0) {
             cout << ">> ERROR : Pilihan tidak valid." << endl;
-            pressEnter(); // Pause biar user baca errornya
+            pressEnter();
         }
 
     } while (mainChoice != 0);
