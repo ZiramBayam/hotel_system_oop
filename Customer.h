@@ -7,17 +7,14 @@ class Customer {
 private:
     int idCustomer;
     std::string name;
-    std::string phoneNumber;
 
 public:
-    Customer(int id, std::string n, std::string phone = "-");
+    Customer(int id, std::string n);
 
     int getId() const;
     std::string getName() const;
-    std::string getPhoneNumber() const;
 
     void setName(std::string newName);
-    void setPhoneNumber(std::string newPhone);
 };
 
 #endif
