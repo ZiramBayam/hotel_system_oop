@@ -18,14 +18,25 @@ string Reservation::getCheckOut() const { return checkOut; }
 Customer* Reservation::getCustomer() const { return customer; }
 
 void Reservation::createPayment(IPaymentStrategy* method) {
-    double total = room->getPrice();
+    int nights = DateUtils::getDurationDays(checkIn, checkOut);
+    
+    if (nights <= 0) nights = 1;
+
+    double roomPrice = room->getPrice();
+    double total = roomPrice * nights;
+
+    cout << "   [INFO] Durasi: " << nights << " malam @ Rp " << (long)roomPrice << endl;
+
     payment = new Payment(idReservation, total, method);
     payment->process();
 }
 
 void Reservation::printDetail() {
+    int nights = DateUtils::getDurationDays(checkIn, checkOut);
+    
     cout << "ID: " << idReservation 
-         << " | Guest: " << left << setw(10) << customer->getName()
-         << " | Room: " << room->getId() 
-         << " | Date: " << checkIn << " to " << checkOut << endl;
+         << " | " << left << setw(10) << customer->getName()
+         << " | Room: " << room->getId()
+         << " | " << checkIn << " s/d " << checkOut 
+         << " (" << nights << " Night)" << endl;
 }
