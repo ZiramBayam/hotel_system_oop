@@ -16,9 +16,7 @@ Hotel* Hotel::getInstance() {
 }
 
 bool Hotel::addRoom(Room* r) {
-    // Cek apakah ID sudah ada?
     if (getRoom(r->getId()) != nullptr) {
-        // ID Duplikat! Jangan simpan.
         return false;
     }
     roomList.push_back(r);
@@ -45,7 +43,7 @@ Customer* Hotel::getCustomer(int id) {
     return nullptr;
 }
 
-void Hotel::createReservation(int cId, int rId, string inDate, string outDate, bool withBreakfast) {
+void Hotel::createReservation(int cId, int rId, string inDate, string outDate, bool withBreakfast, int paymentType) {
     if (inDate >= outDate) {
         cout << ">> ERROR : Tanggal Check-Out harus setelah Check-In!" << endl;
         return;
@@ -73,7 +71,14 @@ void Hotel::createReservation(int cId, int rId, string inDate, string outDate, b
 
     int newId = reservationList.size() + 1;
     Reservation* res = new Reservation(newId, cust, room, inDate, outDate);
-    res->createPayment(new CashPayment());
+    IPaymentStrategy* strategy = nullptr;
+    
+    if (paymentType == 2) {
+        strategy = new TransferPayment(); // Gunakan strategi Transfer
+    } else {
+        strategy = new CashPayment(); // Default ke Cash
+    }
+    res->createPayment(strategy);
     
     reservationList.push_back(res);
     cout << ">> SUKSES : Booking ID " << newId << " berhasil dibuat!" << endl;
@@ -140,16 +145,14 @@ void Hotel::showCustomerHistory(int cId) {
     if (!found) cout << "(Belum ada riwayat pemesanan)" << endl;
 }
 
-void Hotel::editCustomer(int cId, string newName, string newContact) {
+void Hotel::editCustomer(int cId, string newName) {
     Customer* c = getCustomer(cId);
 
     if (c) {
         c->setName(newName);
-        c->setPhoneNumber(newContact);
         
         cout << ">> SUKSES : Data tamu berhasil diperbarui." << endl;
         cout << ">> Nama Baru: " << c->getName() << endl;
-        cout << ">> Kontak   : " << c->getPhoneNumber() << endl;
     } else {
         cout << ">> ERROR : ID Tamu tidak ditemukan!" << endl;
     }

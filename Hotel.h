@@ -24,13 +24,13 @@ public:
     // Helper untuk cek keberadaan data
     Customer* getCustomer(int id); 
     Room* getRoom(int id);
-    
-    void createReservation(int cId, int rId, std::string inDate, std::string outDate, bool withBreakfast);
+
+    void createReservation(int cId, int rId, std::string inDate, std::string outDate, bool withBreakfast, int paymentType);
     void cancelReservation(int resId);
     void showDashboard();
     void checkAvailability(std::string in, std::string out);
     void showCustomerHistory(int cId);
-    void editCustomer(int cId, std::string newName, std::string newContact);
+    void editCustomer(int cId, std::string newName);
     void showAllRooms();
     void showAllCustomers();
     void showAllReservations();
